@@ -6,6 +6,7 @@
   "scripts": {
     "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://aadil59.github.io/invoice",
   "keywords": [
     "JavaScript",
     "|",
