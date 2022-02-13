@@ -1,0 +1,21 @@
+{
+  "name": "invoice-web",
+  "version": "1.0.0",
+  "description": "An application to manage billing including some tax details like GST and CGST",
+  "main": "script.js",
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "JavaScript",
+    "|",
+    "HTML",
+    "|",
+    "CSS"
+  ],
+  "author": "Aadil N Khan",
+  "license": "ISC",
+  "dependencies": {
+    "gh-pages": "^2.1.1"
+  }
+}
