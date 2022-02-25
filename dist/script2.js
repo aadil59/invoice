@@ -68,18 +68,14 @@
 function generateTableRow() {
 	var emptyColumn = document.createElement('tr');
 
-	emptyColumn.innerHTML = `<td><a class="cut">-</a><span contenteditable>1</span></td>
-	<td><span contenteditable></span></td>
+	emptyColumn.innerHTML = `<td serial="1"><a class="cut">-</a><span contenteditable>1</span></td>
 	<td><span contenteditable></span></td>
 	<td><span contenteditable></span></td>
 	<td><span><input type="date" name="exp" /></span></td>
-	<td><span contenteditable></span></td>
-	<td><span contenteditable></span></td>
 	<td><span data-prefix>&#8377;</span><span contenteditable>0.00</span></td>
 	<td><span contenteditable>1</span></td>
 	<td><span contenteditable>0.00</span></td>
-	<td><span contenteditable>6.00</span></td>
-	<td><span contenteditable>6.00</span></td>
+	<td><span contenteditable>0.00</span></td>
 	<td><span data-prefix>&#8377;</span><span>0.00</span></td>`;
 
 	return emptyColumn;
@@ -120,7 +116,7 @@ function updateNumber(e) {
 function updateInvoice() {
 	var total = 0;
 	var cells, price, total, a, i;
-
+	const all_gst = [];
 	// update inventory cells
 	// ======================
 
@@ -129,38 +125,43 @@ function updateInvoice() {
 		cells = a[i].querySelectorAll('span:last-child');
 
 		// set price as cell[6] * cell[7]
-		price = (parseFloatHTML(cells[7]) * parseFloatHTML(cells[8])) - (parseFloatHTML(cells[7]) * parseFloatHTML(cells[8])*(parseFloatHTML(cells[9]))/100);
+		price = parseFloatHTML(cells[4]) * parseFloatHTML(cells[5]);
+		price_w_gst = (parseFloatHTML(cells[4]) * parseFloatHTML(cells[5])*(parseFloatHTML(cells[6]))/100) + (parseFloatHTML(cells[4]) * parseFloatHTML(cells[5])*(parseFloatHTML(cells[7]))/100);
 		// add price to total
+		all_gst.push(price_w_gst);
 		total += price;
 
 		// set row total
-		cells[12].innerHTML = price;
+		cells[8].innerHTML = price;
 		cells[0].innerHTML = i+1
 	}
 
 	// update balance cells
 	// ====================
-
+	let grand_total = all_gst.reduce((a, b) => a + b, 0) + total
 	// get balance cells
 	cells = document.querySelectorAll('table.balance td:last-child span:last-child');
 
 	// set total
 	cells[0].innerHTML = total;
+	cells[1].innerHTML = all_gst.reduce((a, b) => a + b, 0);
+	cells[2].innerHTML = grand_total;
 
 	// set balance and meta balance
-	cells[2].innerHTML = document.querySelector('table.meta tr:last-child td:last-child span:last-child').innerHTML = parsePrice(total - parseFloatHTML(cells[1]));
+	// cells[2].innerHTML = document.querySelector('table.meta tr:last-child td:last-child span:last-child').innerHTML = parsePrice(total - parseFloatHTML(cells[1]));
 
 	// update prefix formatting
 	// ========================
 
-	var prefix = document.querySelector('#prefix').innerHTML;
-	for (a = document.querySelectorAll('[data-prefix]'), i = 0; a[i]; ++i) a[i].innerHTML = prefix;
+	// var prefix = document.querySelector('#prefix').innerHTML;
+	// for (a = document.querySelectorAll('[data-prefix]'), i = 0; a[i]; ++i) a[i].innerHTML = prefix;
 
 	// update price formatting
 	// =======================
 
 	for (a = document.querySelectorAll('span[data-prefix] + span'), i = 0; a[i]; ++i) if (document.activeElement != a[i]) a[i].innerHTML = parsePrice(parseFloatHTML(a[i]));
-	document.getElementById('words').innerHTML = inWords(total);
+	console.log('all_gst', all_gst.reduce((a, b) => a + b, 0));
+	document.getElementById('words').innerHTML = inWords(grand_total);
 }
 
 // TRANSFORM Number to Words
