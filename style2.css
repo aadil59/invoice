@@ -98,6 +98,7 @@ table.meta:after, table.balance:after { clear: both; content: ""; display: table
 	vertical-align: middle;
 }
 .total-details {
+	display: none;
 	border-collapse: collapse;
 }
 
@@ -112,10 +113,14 @@ table.inventory { clear: both; width: 100%; }
 table.inventory th { font-weight: bold; text-align: center; vertical-align: middle; }
 table.inventory td {width: auto; text-align: center; vertical-align: middle; }
 table.inventory th:nth-child(1) { width: 4%; }
-table.inventory th:nth-child(2) { width: 5%; }
-table.inventory th:nth-child(3) { width: 16%; }
-table.inventory th:nth-child(5) { width: 13%; }
-table.inventory th:nth-child(9) { width: 4%; }
+table.inventory th:nth-child(2) { width: 20%; }
+table.inventory th:nth-child(3) { width: 12%; }
+table.inventory th:nth-child(4) { width: 14%; }
+table.inventory th:nth-child(5) { width: 10%; }
+table.inventory th:nth-child(6) { width: 8%; }
+table.inventory th:nth-child(7) { width: 8%; }
+table.inventory th:nth-child(8) { width: 8%; }
+table.inventory th:nth-child(9) { width: 15%; }
 
 /* table balance */
 
